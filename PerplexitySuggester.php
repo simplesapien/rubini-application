@@ -5,9 +5,13 @@ class PerplexitySuggester
 
     public function __construct()
     {
-        $this->api_key = getenv('PERPLEXITY_API_KEY');
-    }
+        require_once '../config/config.php';
+        $this->api_key = PERPLEXITY_API_KEY;
 
+        // When testing locally
+        // $api = getenv('PERPLEXITY_API_KEY');
+        // $this->api_key = $api;
+    }
 
     public function getSuggestions($keyword)
     {
@@ -17,36 +21,36 @@ class PerplexitySuggester
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'You are to create an array of 5 social media comments about the user-provided keyword.
+                    'content' => 'Create an array of 5 social media comments about the user-provided keyword, focusing exclusively on comments from real people on social media platforms. These comments should reflect the users feelings or emotions towards the trend keyword.
 
 Each comment should be in the following JSON format:
-
+json
 {
-  "username": "username_here",
-  "comment": "comment_here",
-  "url": "link_to_original_post"
+    "username": "username_here",
+    "comment": "comment_here",
+    "url": "link_to_original_post"
 }
 
-You will output **only** the suggestions in **valid JSON format** without any additional text or explanations.
-
+Output only the suggestions in valid JSON format without any additional text or explanations.
 The JSON should strictly follow this structure:
-
+json
 {
-  "suggestions": [
-    {
-      "username": "username_here",
-      "comment": "comment_here",
-      "url": "link_to_original_post"
-    },
-    // 4 more comments
-  ]
+    "suggestions": [
+        {
+            "username": "username_here",
+            "comment": "comment_here",
+            "url": "link_to_original_post"
+        },
+        // 4 more comments
+    ]
 }
 
 Ensure the JSON is properly formatted and does not include any comments or additional text.'
+
                 ],
                 [
                     'role' => 'user',
-                    'content' => $keyword
+                    'content' => 'Your trend keyword is: ' . $keyword
                 ]
             ],
             'temperature' => 0.2,

@@ -394,8 +394,9 @@
                             var mediaContent = document.createElement('div');
                             mediaContent.className = 'media-content';
                             mediaContent.innerHTML = `
-                                <p><strong>${suggestion.username}</strong> (<a href="${suggestion.url}" target="_blank">Original Post</a>)</p>
-                                <p>"${suggestion.comment}"</p>
+                                <p><strong>"${suggestion.comment}"</strong></p>
+                                <p class="is-size-7">${suggestion.username} - (<a href="${suggestion.url}" target="_blank">Original Post</a>)</p>
+
                             `;
 
                             article.appendChild(mediaLeft);
